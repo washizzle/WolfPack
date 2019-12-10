@@ -15,7 +15,7 @@ namespace WolfPack
     using System = global::System;
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))")]
-    public abstract class WolfPackControllerBase : Microsoft.AspNetCore.Mvc.Controller
+    public abstract class WolvesControllerBase : Microsoft.AspNetCore.Mvc.Controller
     {
         /// <summary>removes a wolf by ID</summary>
         /// <param name="id">UUID of the wolf to get</param>
@@ -44,6 +44,11 @@ namespace WolfPack
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("wolves", Name = "addWolf")]
         public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.ActionResult<Wolf>> AddWolf([Microsoft.AspNetCore.Mvc.FromBody] Wolf body);
     
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))")]
+    public abstract class PacksControllerBase : Microsoft.AspNetCore.Mvc.Controller
+    {
         /// <summary>removes a wolf from a pack</summary>
         /// <param name="packId">UUID of the pack to delete the wolf from</param>
         /// <param name="id">UUID of the wolf to delete from the pack</param>
@@ -53,9 +58,10 @@ namespace WolfPack
     
         /// <summary>Adds a(n existing) wolf to a pack</summary>
         /// <param name="packId">uuid of the pack to add a wolf to</param>
+        /// <param name="wolfId">uuid of the wolf</param>
         /// <returns>wolf added to pack</returns>
-        [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("packs/{packId}/wolves", Name = "addWolfToPack")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> AddWolfToPack([Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] System.Guid packId, [Microsoft.AspNetCore.Mvc.FromBody] System.Guid? body);
+        [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("packs/{packId}/wolves/{wolfId}", Name = "addWolfToPack")]
+        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> AddWolfToPack([Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] System.Guid packId, [Microsoft.AspNetCore.Mvc.ModelBinding.BindRequired] System.Guid wolfId);
     
         /// <summary>Creates a pack</summary>
         /// <param name="body">Pack to add</param>
@@ -80,31 +86,23 @@ namespace WolfPack
         public System.Guid Id { get; set; }
     
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
     
         [Newtonsoft.Json.JsonProperty("gender", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 3)]
         public string Gender { get; set; }
     
         [Newtonsoft.Json.JsonProperty("birthdate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset Birthdate { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("gps_location", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonProperty("GpsLocation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 3)]
         public string GpsLocation { get; set; }
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.28.0 (Newtonsoft.Json v11.0.0.0)")]
@@ -114,24 +112,14 @@ namespace WolfPack
         public System.Guid Id { get; set; }
     
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
     
         [Newtonsoft.Json.JsonProperty("wolves", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<Wolf> Wolves { get; set; } = new System.Collections.Generic.List<Wolf>();
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-    
+        public System.Collections.Generic.List<Wolf> Wolves { get; set; }
+
+
     }
 
 }

@@ -1,0 +1,309 @@
+openapi: 3.0.0
+info:
+  description: This is an API to track all the wolves in a pack
+  version: "1.0.0"
+  title: WolfPack API
+  contact:
+    email: mauriceho@hotmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: wolves
+    description: wolf calls
+  - name: packs
+    description: pack calls
+paths:
+  /wolves/{id}:
+    delete:
+      summary: removes a wolf by ID
+      tags:
+        - wolves
+      operationId: deleteWolfById
+      description: Removes a wolf from the system
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the wolf to get
+      responses:
+        '200':
+          description: 'Wolf removed'
+        '404':
+          description: 'Id invalid, or wolf not found'
+    put:
+      summary: updates a wolf by ID
+      tags:
+        - wolves
+      operationId: updateWolfById
+      description: Updates a wolf in the system
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the wolf to get
+      responses:
+        '200':
+          description: 'Wolf updated'
+        '204':
+          description: 'No content'
+        '400':
+          description: 'invalid input, object invalid'
+        '404':
+          description: 'Id invalid, or wolf not found'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wolf'
+        description: Wolf to update
+  /wolves:
+    get:
+      summary: lists wolves
+      tags: 
+        - wolves
+      operationId: getWolves
+      description: |
+        By passing in the appropriate options, you can search for 
+        the appropriate wolf in the system.
+      parameters:
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up a wolf
+          required: false
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 50
+        - in: query
+          name: skip
+          description: number of records to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wolf'
+        '400':
+          description: bad input parameter
+    post:
+      summary: adds a wolf
+      tags: 
+        - wolves
+      operationId: addWolf
+      description: Adds a wolf to the system
+      responses:
+        '201':
+          description: 'wolf created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wolf'
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: 'A wolf with the same id already exists'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wolf'
+        description: Wolf to add
+        
+  /packs/{packId}/wolves/{id}:
+    delete:
+      summary: removes a wolf from a pack
+      tags:
+        - packs
+      operationId: deleteWolfFromPack
+      description: Removes a wolf with the given id from a pack with the given packId
+      parameters:
+        - in: path
+          name: packId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the pack to delete the wolf from
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the wolf to delete from the pack
+      responses:
+        '200':
+          description: 'Wolf removed'
+        '404':
+          description: 'Id invalid, or wolf not found'
+  /packs/{packId}/wolves/{wolfId}:
+    post:
+      summary: Adds a(n existing) wolf to a pack
+      tags:
+        - packs
+      operationId: addWolfToPack
+      description: Adds a wolf to the pack
+      parameters:
+        - in: path
+          name: packId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: uuid of the pack to add a wolf to
+        - in: path
+          name: wolfId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: uuid of the wolf
+      responses:
+        '200':
+          description: 'wolf added to pack'
+        '400':
+          description: 'Wolf and/or pack ID invalid'
+        '404':
+          description: 'Wolf and/or pack ID not found'
+        '409':
+          description: 'The wolf you are trying to add is already in the pack'
+  /packs:
+    post:
+      summary: Creates a pack
+      tags: 
+        - packs
+      operationId: addPack
+      description: Adds a pack to the system
+      responses:
+        '201':
+          description: 'pack created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pack'
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: 'A pack with the same id already exists'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pack'
+        description: Pack to add
+    get:
+      summary: lists packs and wolves that are in them
+      tags: 
+        - packs
+      operationId: getPacks
+      description: |
+        Displays a list of packs and the wolves that are in them
+      parameters:
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up a pack
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: skip
+          description: number of records to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pack'
+        '400':
+          description: bad input parameter
+      
+          
+components:
+  schemas:
+    Wolf:
+      type: object
+      required:
+        - name
+        - gender
+        - birthdate
+        - GpsLocation
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 'd290f1ee-6c54-4b01-90e6-d701748f0851'
+        name:
+          type: string
+          example: Edwin
+          minLength: 3
+          maxLength: 50
+        gender:
+          type: string
+          example: male
+          minLength: 3
+          maxLength: 50
+        birthdate:
+          type: string
+          format: date-time
+          example: '2019-12-05T00:08:33.001Z'
+        GpsLocation:
+          type: string
+          format: location
+          example: '40.689263, -74.044505'
+          minLength: 3
+          maxLength: 50
+    Pack:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 'd290f1ee-6c54-4b01-90e6-d701748f0851'
+        name:
+          type: string
+          example: MainPack
+          minLength: 3
+          maxLength: 50
+        wolves:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wolf'
