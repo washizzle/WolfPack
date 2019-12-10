@@ -8,7 +8,7 @@ using WolfPack.EntityFramework;
 
 namespace WolfPack.Migrations
 {
-    [DbContext(typeof(WolfContext))]
+    [DbContext(typeof(WolfPackContext))]
     partial class WolfContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

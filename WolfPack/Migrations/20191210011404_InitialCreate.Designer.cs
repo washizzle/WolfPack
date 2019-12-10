@@ -9,7 +9,7 @@ using WolfPack.EntityFramework;
 
 namespace WolfPack.Migrations
 {
-    [DbContext(typeof(WolfContext))]
+    [DbContext(typeof(WolfPackContext))]
     [Migration("20191210011404_InitialCreate")]
     partial class InitialCreate
     {

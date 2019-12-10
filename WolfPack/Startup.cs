@@ -27,7 +27,7 @@ namespace WolfPack
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<WolfContext>();
+            services.AddDbContext<WolfPackContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

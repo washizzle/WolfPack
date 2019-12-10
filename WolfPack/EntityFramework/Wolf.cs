@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 namespace WolfPack.EntityFramework
 {
-    public class WolfContext : DbContext
+    public class WolfPackContext : DbContext
     {
         public DbSet<Wolf> Wolves { get; set; }
         public DbSet<Pack> Packs { get; set; }
