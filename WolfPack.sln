@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfPack", "WolfPack\WolfPack.csproj", "{CBDBCD64-D656-4F73-848C-F753D2E6543F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfPack.test", "WolfPack.test\WolfPack.test.csproj", "{951BC064-F9CD-4D4A-974C-2A6F922D12A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBDBCD64-D656-4F73-848C-F753D2E6543F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBDBCD64-D656-4F73-848C-F753D2E6543F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBDBCD64-D656-4F73-848C-F753D2E6543F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBDBCD64-D656-4F73-848C-F753D2E6543F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{951BC064-F9CD-4D4A-974C-2A6F922D12A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951BC064-F9CD-4D4A-974C-2A6F922D12A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951BC064-F9CD-4D4A-974C-2A6F922D12A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951BC064-F9CD-4D4A-974C-2A6F922D12A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
