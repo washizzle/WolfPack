@@ -55,19 +55,17 @@ namespace WolfPack.Controllers
 
         public override async Task<ActionResult<Wolf>> AddWolf(Wolf body)
         {
-            using (var context = _wolfContext)
+            var result1 = await _wolfContext.Wolves.AddAsync(new EntityFramework.Wolf()
             {
-                var result1 = await context.Wolves.AddAsync(new EntityFramework.Wolf()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = body.Name,
-                    Gender = body.Gender,
-                    Birthdate = body.Birthdate,
-                    GpsLocation = body.GpsLocation
-                });
-                var result2 = await context.SaveChangesAsync();
-                return Created(result1.ToString(), result2); //TODO: test this
-            }
+                Id = Guid.NewGuid(),
+                Name = body.Name,
+                Gender = body.Gender,
+                Birthdate = body.Birthdate,
+                GpsLocation = body.GpsLocation
+            });
+            var result2 = await _wolfContext.SaveChangesAsync();
+            return Created(result1.ToString(), result2); //TODO: test this
+
             return BadRequest();
             throw new NotImplementedException();
         }
